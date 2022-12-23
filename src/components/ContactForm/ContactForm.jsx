@@ -4,7 +4,6 @@ import styles from '../ContactForm/ContactForm.module.css';
 
 export default class ContactForm extends Component {
   state = {
-    contacts: [],
     name: '',
     number: '',
   };
@@ -25,7 +24,7 @@ export default class ContactForm extends Component {
     };
 
     this.props.onSubmit(newContact);
-    this.setState({ name: '', contacts: '', number: '' });
+    this.setState({ name: '', number: '' });
   };
 
   render() {

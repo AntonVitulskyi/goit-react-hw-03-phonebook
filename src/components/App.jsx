@@ -7,16 +7,30 @@ import Filter from './Filter/Filter';
 
 export class App extends Component {
   state = {
-    contacts: [
-      { id: 'id-1', name: 'Rosie Simpson', number: '459-12-56' },
-      { id: 'id-2', name: 'Hermione Kline', number: '443-89-12' },
-      { id: 'id-3', name: 'Eden Clements', number: '645-17-79' },
-      { id: 'id-4', name: 'Annie Copeland', number: '227-91-26' },
-      { id: 'id-5', name: 'John Wick', number: '777-77-77' },
-      { id: 'id-6', name: 'Wait Forme', number: '937-99-92' },
-    ],
+    contacts: [],
     filter: '',
   };
+
+  getContactsFromStorage() {
+    if (JSON.parse(localStorage.getItem('contacts') === null)) {
+      return [
+        { name: 'John Wick', number: '777-77-77', id: '1' },
+        { name: 'Wait for me', number: '937-99-92', id: '2' },
+      ];
+    } else {
+      return JSON.parse(localStorage.getItem('contacts'));
+    }
+  }
+
+  componentDidMount() {
+    this.setState({ contacts: this.getContactsFromStorage() });
+  }
+
+  componentDidUpdate(_, prevState) {
+    if (this.state.contacts !== prevState.contacts) {
+      localStorage.setItem('contacts', JSON.stringify(this.state.contacts));
+    }
+  }
 
   onSubmit = newContact => {
     this.setState(prevState => {
